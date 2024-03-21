@@ -1,41 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import twaLogo from './assets/tapps.png'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-import WebApp from '@twa-dev/sdk'
+import { ChangeEventHandler, useState } from 'react';
+import { MessageType } from './types';
+import { openai } from './api';
+import { Message } from './components';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [userMessage, setUserMessage] = useState('');
+
+  const handleGetResponse = async () => {
+    if (!userMessage) return;
+
+    setMessages((prev) => [
+      ...prev,
+      { initiator: 'User', message: userMessage },
+      { initiator: 'Bot', message: '' },
+    ]);
+    setUserMessage('');
+
+    const stream = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: userMessage }],
+      model: 'pai-001',
+      stream: true,
+    });
+
+    for await (const chunk of stream) {
+      const message = chunk.choices[0]?.delta?.content || '';
+
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        const messagesCount = newMessages.length - 1;
+        const lastBotMessage = newMessages[messagesCount];
+        const newBotMessage = { ...lastBotMessage, message: lastBotMessage.message + message };
+
+        newMessages[messagesCount] = newBotMessage;
+
+        return newMessages;
+      });
+    }
+  };
+
+  const handleChangeMessage: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setUserMessage(e.target.value);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://ton.org/dev" target="_blank">
-          <img src={twaLogo} className="logo" alt="TWA logo" />
-        </a>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <div className="conversation">
+        {messages.map((message, index) => (
+          <Message key={index} {...message} />
+        ))}
       </div>
-      <h1>TWA + Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div className="interaction">
+        <input
+          className="user-input"
+          placeholder="Message Chatik..."
+          value={userMessage}
+          onChange={handleChangeMessage}
+        />
+        <button className="send-btn" onClick={handleGetResponse}>
+          Send
         </button>
       </div>
-      {/*  */}
-      <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>
-            Show Alert
-        </button>
-      </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
