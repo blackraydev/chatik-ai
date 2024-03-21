@@ -40,7 +40,7 @@ jobs:
       - name: Build
         env:
           PAWAN_API_KEY: ${{ secrets.PAWAN_API_KEY }}
-        run: "$PAWAN_API_KEY" npm run build
+        run: npm run build "$PAWAN_API_KEY" 
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
