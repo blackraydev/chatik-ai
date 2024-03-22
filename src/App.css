@@ -10,6 +10,7 @@
 }
 
 .greeting {
+  margin-top: 20px;
   font-size: 24px;
   color: white;
 }
@@ -23,42 +24,6 @@
   height: 92%;
   padding-bottom: 10px;
   overflow-y: scroll;
-}
-
-.message-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.message-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  gap: 10px;
-}
-
-.message-content {
-  display: flex;
-  text-align: left;
-  justify-content: flex-start;
-  align-items: flex-start;
-  color: white;
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 10px;
-  line-height: 0.6cm;
-}
-
-.avatar {
-  width: 24px;
-  height: 24px;
-  background: rgb(40, 40, 47);
-  border-radius: 50%;
 }
 
 .interaction {
