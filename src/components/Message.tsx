@@ -7,7 +7,7 @@ export const Message = ({ initiator, message }: MessageType) => {
   return (
     <div className="message-wrapper">
       <div className="message-header">
-        <img className="avatar" src={`/assets/${avatarSrc}`} />
+        <img className="avatar" src={`/telegram-mini-app/assets/${avatarSrc}`} />
         <p className="title">{title}</p>
       </div>
       <div className="message-content">{message}</div>
