@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState } from 'react';
 import { MessageType } from './types';
-import { openai } from './api';
+import { geminiPro } from './api';
 import { Message } from './components';
 import './App.css';
 
@@ -18,14 +18,11 @@ function App() {
     ]);
     setUserMessage('');
 
-    const stream = await openai.chat.completions.create({
-      messages: [{ role: 'user', content: userMessage }],
-      model: 'gpt-3.5-turbo',
-      stream: true,
-    });
+    const geminiStream = await geminiPro.generateContentStream(userMessage);
 
-    for await (const chunk of stream) {
-      const message = chunk.choices[0]?.delta?.content || '';
+    for await (const chunk of geminiStream.stream) {
+      const message = chunk.text();
+      console.log(message)
 
       setMessages((prev) => {
         const newMessages = [...prev];
