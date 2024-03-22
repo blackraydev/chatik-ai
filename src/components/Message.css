@@ -17,6 +17,7 @@
 
 .message-content {
   display: flex;
+  flex-direction: column;
   text-align: left;
   justify-content: flex-start;
   align-items: flex-start;
@@ -26,6 +27,8 @@
   margin-top: 10px;
   margin-left: 4px;
   line-height: 0.6cm;
+  overflow: scroll;
+  background-color: inherit;
 }
 
 .avatar {

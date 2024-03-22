@@ -1,3 +1,4 @@
+import MDEditor from '@uiw/react-md-editor';
 import { MessageType } from '../types';
 import './Message.css';
 
@@ -11,7 +12,7 @@ export const Message = ({ initiator, message, error, isLoading }: MessageType) =
         <img className="avatar" src={`/telegram-mini-app/assets/${avatarSrc}`} />
         <p className="title">{title}</p>
       </div>
-      {message && <div className="message-content">{message}</div>}
+      {message && <MDEditor.Markdown className="message-content" source={message} />}
       {isLoading && <div className="spinner" />}
       {error && <div className="error">{error}</div>}
     </div>
