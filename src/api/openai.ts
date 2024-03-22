@@ -6,5 +6,7 @@ export const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
   defaultHeaders: {
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
   },
 });

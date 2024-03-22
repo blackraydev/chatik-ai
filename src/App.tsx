@@ -20,7 +20,7 @@ function App() {
 
     const stream = await openai.chat.completions.create({
       messages: [{ role: 'user', content: userMessage }],
-      model: 'pai-001',
+      model: 'gpt-3.5-turbo',
       stream: true,
     });
 
