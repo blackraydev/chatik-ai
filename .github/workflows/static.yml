@@ -40,7 +40,7 @@ jobs:
       - name: Build
         env:
           VITE_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: npm run build "$VITE_GOOGLE_API_KEY" 
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
