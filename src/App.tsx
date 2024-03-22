@@ -22,7 +22,6 @@ function App() {
 
     for await (const chunk of geminiStream.stream) {
       const message = chunk.text();
-      console.log(message)
 
       setMessages((prev) => {
         const newMessages = [...prev];
