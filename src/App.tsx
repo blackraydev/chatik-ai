@@ -1,8 +1,8 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { MessageType } from './types';
-import { geminiPro } from './api';
 import { Message } from './components';
 import { SendIcon } from './icons';
+import { askMeetik } from './api';
 import './App.css';
 
 function App() {
@@ -30,17 +30,13 @@ function App() {
     });
 
     try {
-      const geminiStream = await geminiPro.generateContentStream(userMessage);
+      const botMessage = await askMeetik(userMessage);
 
-      for await (const chunk of geminiStream.stream) {
-        const message = chunk.text();
-
-        setBotMessage((prev) => ({
-          ...prev,
-          message: (prev?.message || '') + message,
-          isLoading: false,
-        }));
-      }
+      setBotMessage((prev) => ({
+        ...prev,
+        message: botMessage,
+        isLoading: false,
+      }));
     } catch (e) {
       const error = e as Error;
       let errorMessage = error.message;

@@ -1,1 +1,1 @@
-export { geminiPro } from './google';
+export { askMeetik } from './meetik';
