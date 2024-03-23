@@ -2,6 +2,7 @@ import { ChangeEventHandler, useEffect, useState } from 'react';
 import { MessageType } from './types';
 import { geminiPro } from './api';
 import { Message } from './components';
+import { SendIcon } from './icons';
 import './App.css';
 
 function App() {
@@ -42,13 +43,18 @@ function App() {
       }
     } catch (e) {
       const error = e as Error;
+      let errorMessage = error.message;
 
-      if (error.message?.includes('400')) {
-        setBotMessage((prev) => ({
-          ...prev,
-          error: 'Please, turn on VPN to use this bot',
-        }));
+      if (errorMessage.includes('400')) {
+        errorMessage = 'Please, turn on VPN to use this bot';
+      } else {
+        errorMessage = 'Something went wrong';
       }
+
+      setBotMessage((prev) => ({
+        ...prev,
+        error: errorMessage,
+      }));
     } finally {
       setBotMessage((prev) => ({
         ...prev,
@@ -68,19 +74,22 @@ function App() {
         {messages.length > 0 ? (
           messages.map((message, index) => <Message key={index} {...message} />)
         ) : (
-          <p className="greeting">How can I help you?</p>
+          <div className="greeting">
+            <p>Welcome to Meetik AI Chatbot</p>
+            <span>How can I help you?</span>
+          </div>
         )}
         {botMessage && <Message {...botMessage} />}
       </div>
       <div className="interaction">
         <input
           className="user-input"
-          placeholder="Message Chatik..."
+          placeholder="Send a message..."
           value={userMessage}
           onChange={handleChangeMessage}
         />
         <button className="send-btn" disabled={botMessage?.isLoading} onClick={handleGetResponse}>
-          Send
+          <SendIcon />
         </button>
       </div>
     </div>

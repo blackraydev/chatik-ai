@@ -5,14 +5,30 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  padding: 10px 15px;
   gap: 10px;
 }
 
 .greeting {
-  margin-top: 20px;
-  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(9, 9, 11);
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid rgb(39, 39, 42);
+}
+
+.greeting p {
+  font-size: 18px;
   color: white;
+}
+
+.greeting span {
+  font-size: 16px;
+  color: rgb(161, 161, 169);
+  margin-top: 10px;
 }
 
 .greeting.hidden {
@@ -20,6 +36,7 @@
 }
 
 .conversation {
+  margin-top: 10px;
   width: 95%;
   height: 92%;
   padding-bottom: 10px;
@@ -28,35 +45,49 @@
 
 .interaction {
   display: flex;
+  align-items: center;
   width: 100%;
-  height: 8%;
+  height: 80px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  background: rgb(9, 9, 11);
+  border: 1px solid rgb(39, 39, 42);
 }
 
 .user-input {
-  background: rgb(27, 27, 34);
-  width: 85%;
+  background-color: inherit;
+  width: calc(100% - 65px);
   height: 100%;
   color: white;
   font-size: 16px;
-  padding: 0 10px;
+  padding-left: 15px;
   border-radius: 10px;
 }
 
+.user-input::placeholder {
+  color: rgb(157, 163, 174);
+}
+
 .send-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: 0.2s;
   cursor: pointer;
-  width: 15%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  margin-left: 5px;
-  background: rgb(27, 27, 34);
+  margin: 0 10px;
+  background-color: white;
   font-size: 16px;
   color: white;
 }
 
 .send-btn:hover {
-  background: rgb(37, 37, 44);
+  background: rgb(170, 170, 177);
+}
+
+.send-btn:disabled {
+  cursor: default;
+  background: rgb(150, 150, 157);
 }
