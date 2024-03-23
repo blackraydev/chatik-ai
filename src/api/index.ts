@@ -1,1 +1,1 @@
-export { askMeetik } from './meetik';
+export { askChatik } from './chatik';

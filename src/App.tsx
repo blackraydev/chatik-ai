@@ -2,7 +2,7 @@ import { ChangeEventHandler, useEffect, useState } from 'react';
 import { MessageType } from './types';
 import { Message } from './components';
 import { SendIcon } from './icons';
-import { askMeetik } from './api';
+import { askChatik } from './api';
 import './App.css';
 
 function App() {
@@ -30,13 +30,22 @@ function App() {
     });
 
     try {
-      const botMessage = await askMeetik(userMessage);
+      const stream = await askChatik(userMessage);
+      const decoder = new TextDecoder();
 
-      setBotMessage((prev) => ({
-        ...prev,
-        message: botMessage,
-        isLoading: false,
-      }));
+      if (!stream) {
+        throw new Error('No stream found');
+      }
+
+      for await (const chunk of stream) {
+        const decodedChunk = decoder.decode(chunk);
+
+        setBotMessage((prev) => ({
+          ...prev,
+          message: (prev?.message || '') + decodedChunk,
+          isLoading: false,
+        }));
+      }
     } catch (e) {
       const error = e as Error;
       let errorMessage = error.message;
@@ -71,7 +80,7 @@ function App() {
           messages.map((message, index) => <Message key={index} {...message} />)
         ) : (
           <div className="greeting">
-            <p>Welcome to Meetik AI Chatbot</p>
+            <p>Welcome to Chatik AI Chatbot</p>
             <span>How can I help you?</span>
           </div>
         )}
