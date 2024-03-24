@@ -1,5 +1,5 @@
 export type MessageType = {
-  message?: string;
+  text?: string;
   role?: 'user' | 'model';
   error?: string;
   isLoading?: boolean;

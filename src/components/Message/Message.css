@@ -18,13 +18,18 @@
 .message-content {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
+  margin-left: 4px;
+}
+
+.message-text {
+  display: flex;
+  flex-direction: column;
   text-align: left;
   justify-content: flex-start;
   align-items: flex-start;
   font-size: 16px;
   font-weight: 400;
-  margin-top: 10px;
-  margin-left: 4px;
   line-height: 0.6cm;
   overflow: scroll;
   background-color: inherit;
@@ -46,30 +51,8 @@
 }
 
 .error {
-  margin-top: 10px;
-  margin-left: 4px;
   display: flex;
   color: #bc2b2b;
   font-size: 16px;
   font-weight: 500;
-}
-
-.spinner {
-  margin-top: 10px;
-  margin-left: 4px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid;
-  border-color: transparent rgb(209, 213, 219) rgb(209, 213, 219);
-  border-radius: 50%;
-  animation: spin-anim 1.6s linear infinite;
-}
-
-@keyframes spin-anim {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(720deg);
-  }
 }

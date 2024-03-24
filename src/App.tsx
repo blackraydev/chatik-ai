@@ -1,24 +1,33 @@
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, Fragment, useEffect, useRef, useState } from 'react';
+import { v4 } from 'uuid';
 import { MessageType } from './types';
-import { Message } from './components';
+import { Drawer, Header, Message, Spinner } from './components';
 import { SendIcon } from './icons';
 import { askChatik } from './api';
+import { useConversationsScope, useMessagesScope, useUserScope } from './scopes';
 import './App.css';
 
 function App() {
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const { userId } = useUserScope();
+  const { conversationId, createConversation } = useConversationsScope();
+  const { messages, isMessagesLoading, addMessage } = useMessagesScope();
+
   const [userMessage, setUserMessage] = useState('');
   const [botMessage, setBotMessage] = useState<MessageType | null>(null);
   const [completed, setCompleted] = useState(false);
 
+  const conversationRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    conversationRef.current?.scroll({
+      top: conversationRef.current?.scrollHeight ?? 0,
+      behavior: 'smooth',
+    });
+  }, [messages, botMessage]);
+
   useEffect(() => {
     if (completed && botMessage) {
-      setMessages((prev) => {
-        const newMessages = [...prev, botMessage];
-        localStorage.setItem('history', JSON.stringify(newMessages));
-
-        return newMessages;
-      });
+      addMessage(botMessage);
       setBotMessage(null);
       setCompleted(false);
     }
@@ -27,7 +36,8 @@ function App() {
   const handleGetResponse = async () => {
     if (!userMessage) return;
 
-    setMessages((prev) => [...prev, { role: 'user', message: userMessage }]);
+    addMessage({ role: 'user', text: userMessage });
+
     setUserMessage('');
     setBotMessage({
       role: 'model',
@@ -35,10 +45,8 @@ function App() {
     });
 
     try {
-      const historyJSON = localStorage.getItem('history');
-      const history: MessageType[] = historyJSON ? JSON.parse(historyJSON) : [];
-
-      const stream = await askChatik({ history, message: userMessage });
+      const targetConversationId = conversationId || v4();
+      const stream = await askChatik({ conversationId: targetConversationId, userMessage });
       const decoder = new TextDecoder();
 
       if (!stream) {
@@ -50,9 +58,13 @@ function App() {
 
         setBotMessage((prev) => ({
           ...prev,
-          message: (prev?.message || '') + decodedChunk,
+          text: (prev?.text || '') + decodedChunk,
           isLoading: false,
         }));
+      }
+
+      if (userId && !conversationId) {
+        await createConversation({ userId, conversationId: targetConversationId });
       }
     } catch (e) {
       setBotMessage((prev) => ({
@@ -72,18 +84,40 @@ function App() {
     setUserMessage(e.target.value);
   };
 
+  const renderConversation = () => {
+    if (isMessagesLoading) {
+      return (
+        <div className="center">
+          <Spinner size="big" />
+        </div>
+      );
+    }
+
+    if (!messages.length) {
+      return (
+        <div className="greeting">
+          <p>Welcome to Chatik AI Chatbot</p>
+          <span>How can I help you?</span>
+        </div>
+      );
+    }
+
+    return (
+      <Fragment>
+        {messages.map((message, index) => (
+          <Message key={index} {...message} />
+        ))}
+        {botMessage && <Message {...botMessage} />}
+      </Fragment>
+    );
+  };
+
   return (
     <div className="app">
-      <div className="conversation">
-        {messages.length > 0 ? (
-          messages.map((message, index) => <Message key={index} {...message} />)
-        ) : (
-          <div className="greeting">
-            <p>Welcome to Chatik AI Chatbot</p>
-            <span>How can I help you?</span>
-          </div>
-        )}
-        {botMessage && <Message {...botMessage} />}
+      <Header />
+      <Drawer />
+      <div className="conversation" ref={conversationRef}>
+        {renderConversation()}
       </div>
       <div className="interaction">
         <input
@@ -92,7 +126,11 @@ function App() {
           value={userMessage}
           onChange={handleChangeMessage}
         />
-        <button className="send-btn" disabled={botMessage?.isLoading} onClick={handleGetResponse}>
+        <button
+          className="send-btn"
+          disabled={!userMessage || botMessage?.isLoading}
+          onClick={handleGetResponse}
+        >
           <SendIcon />
         </button>
       </div>

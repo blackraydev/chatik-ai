@@ -1,0 +1,52 @@
+.overlay {
+  transition: 0.2s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+.overlay.visible {
+  background: rgba(0, 0, 0, 0.25);
+  visibility: visible;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px;
+  transition: 0.2s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(24, 24, 26);
+  height: 100%;
+  width: 85%;
+  border-right: 1px solid rgb(39, 39, 42);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transform: translate(-100%);
+}
+
+.drawer.visible {
+  transform: translate(0);
+}
+
+.drawer .conversation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  height: fit-content;
+}
+
+.drawer .conversation-title {
+  color: white;
+  font-size: 16px;
+  text-align: justify;
+}
