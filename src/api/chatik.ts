@@ -1,9 +1,15 @@
 import '../polyfills/readableStream';
+import { MessageType } from '../types';
 
-export const askChatik = async (message: string) => {
+type AskChatikParams = {
+  history: MessageType[];
+  message: string;
+};
+
+export const askChatik = async ({ history, message }: AskChatikParams) => {
   const response = await fetch('https://chatik-ai-proxy.onrender.com/askChatik', {
     method: 'POST',
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ history, message }),
     headers: {
       'Content-Type': 'application/json',
     },

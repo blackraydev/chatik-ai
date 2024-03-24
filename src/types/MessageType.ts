@@ -1,6 +1,6 @@
 export type MessageType = {
   message?: string;
-  initiator?: 'User' | 'Bot';
+  role?: 'user' | 'model';
   error?: string;
   isLoading?: boolean;
 };

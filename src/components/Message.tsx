@@ -3,10 +3,10 @@ import { MessageType } from '../types';
 import { BotIcon, UserIcon } from '../icons';
 import './Message.css';
 
-export const Message = ({ initiator, message, error, isLoading }: MessageType) => {
-  const Icon = initiator === 'User' ? UserIcon : BotIcon;
-  const title = initiator === 'User' ? 'Me' : 'Chatik';
-  const fontColorClass = initiator === 'User' ? 'user-message' : 'bot-message';
+export const Message = ({ role, message, error, isLoading }: MessageType) => {
+  const Icon = role === 'user' ? UserIcon : BotIcon;
+  const title = role === 'user' ? 'Me' : 'Chatik';
+  const fontColorClass = role === 'user' ? 'user-message' : 'bot-message';
 
   return (
     <div className="message-wrapper">

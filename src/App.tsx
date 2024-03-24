@@ -13,7 +13,12 @@ function App() {
 
   useEffect(() => {
     if (completed && botMessage) {
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => {
+        const newMessages = [...prev, botMessage];
+        localStorage.setItem('history', JSON.stringify(newMessages));
+
+        return newMessages;
+      });
       setBotMessage(null);
       setCompleted(false);
     }
@@ -22,15 +27,18 @@ function App() {
   const handleGetResponse = async () => {
     if (!userMessage) return;
 
-    setMessages((prev) => [...prev, { initiator: 'User', message: userMessage }]);
+    setMessages((prev) => [...prev, { role: 'user', message: userMessage }]);
     setUserMessage('');
     setBotMessage({
-      initiator: 'Bot',
+      role: 'model',
       isLoading: true,
     });
 
     try {
-      const stream = await askChatik(userMessage);
+      const historyJSON = localStorage.getItem('history');
+      const history: MessageType[] = historyJSON ? JSON.parse(historyJSON) : [];
+
+      const stream = await askChatik({ history, message: userMessage });
       const decoder = new TextDecoder();
 
       if (!stream) {
@@ -47,18 +55,9 @@ function App() {
         }));
       }
     } catch (e) {
-      const error = e as Error;
-      let errorMessage = error.message;
-
-      if (errorMessage.includes('400')) {
-        errorMessage = 'Please, turn on VPN to use this bot';
-      } else {
-        errorMessage = 'Something went wrong';
-      }
-
       setBotMessage((prev) => ({
         ...prev,
-        error: errorMessage,
+        error: 'Something went wrong',
       }));
     } finally {
       setBotMessage((prev) => ({
