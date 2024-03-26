@@ -8,6 +8,9 @@ type UserScopeProps = {
 type UserDataType = (typeof WebApp)['initDataUnsafe']['user'];
 
 type UserScopeContextType = {
+  /**
+   * Current User ID
+   */
   userId: number;
 };
 

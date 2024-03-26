@@ -1,11 +1,15 @@
 import './BotIcon.css';
 
-export const BotIcon = () => (
+type BotIconProps = {
+  size?: number;
+};
+
+export const BotIcon = ({ size = 20 }: BotIconProps) => (
   <div className="bot-icon">
     <svg
       fill="black"
-      width={20}
-      height={20}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       role="img"
       xmlns="http://www.w3.org/2000/svg"

@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 15px;
   transition: 0.2s;
   position: absolute;
   top: 0;
@@ -36,17 +36,80 @@
   transform: translate(0);
 }
 
+.drawer .new-chat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.drawer .new-chat:hover {
+  background-color: rgb(38, 38, 40);
+}
+
+.drawer .new-chat .action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.drawer .content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.drawer .content-wrapper p {
+  color: rgb(161, 161, 169);
+}
+
 .drawer .conversation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px;
   height: fit-content;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+.drawer .conversation:hover {
+  background-color: rgb(38, 38, 40);
+}
+
+.drawer .conversation.active {
+  background-color: rgb(44, 44, 46);
 }
 
 .drawer .conversation-title {
   color: white;
   font-size: 16px;
   text-align: justify;
+}
+
+.drawer .conversations-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.conversations-wrapper .conversations-period {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.conversations-wrapper .conversations-period .period-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(161, 161, 169);
+  margin-left: 10px;
 }

@@ -19,6 +19,6 @@ export const useGetMessages = ({ conversationId }: UseGetMessagesParams) => {
 
       return messages;
     },
-    enabled: Boolean(conversationId),
+    enabled: false,
   });
 };

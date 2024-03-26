@@ -4,12 +4,14 @@ import './Header.css';
 
 export const Header = () => {
   const { startNewConversation } = useConversationsScope();
-  const { clearMessages } = useMessagesScope();
+  const { messages, clearMessages } = useMessagesScope();
   const { showDrawer } = useDrawerVisibilityScope();
 
   const handleStartNewConversation = () => {
-    startNewConversation();
-    clearMessages();
+    if (messages.length) {
+      startNewConversation();
+      clearMessages();
+    }
   };
 
   return (

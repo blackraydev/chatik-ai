@@ -1,7 +1,7 @@
 import MDEditor from '@uiw/react-md-editor';
-import { BotIcon, UserIcon } from '../../icons';
-import { MessageType } from '../../types';
-import { Spinner } from '..';
+import { BotIcon, UserIcon } from '../../../icons';
+import { MessageType } from '../../../types';
+import { Spinner } from '../../Spinner';
 import './Message.css';
 
 export const Message = ({ role, text, error, isLoading }: MessageType) => {
