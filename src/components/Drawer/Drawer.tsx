@@ -58,7 +58,7 @@ export const Drawer = () => {
     const conversationsByPeriods = conversations.reduce(
       (acc, conversation) => {
         const currentDate = new Date();
-        const date = new Date(Number(conversation.updatedAt));
+        const date = new Date(conversation.updatedAt);
         const diff = Math.abs(currentDate.getTime() - date.getTime());
 
         const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
@@ -91,7 +91,7 @@ export const Drawer = () => {
               <div key={period} className="conversations-period">
                 <p className="period-label">{periodLabels[period as PeriodType]}</p>
                 {conversations
-                  .sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))
+                  .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
                   .map((conversation) => {
                     const conversationClassName =
                       conversation.id === conversationId ? 'conversation active' : 'conversation';

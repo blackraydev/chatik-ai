@@ -4,4 +4,6 @@ export type MessageType = {
   conversationId?: string;
   error?: string;
   isLoading?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

@@ -1,6 +1,7 @@
 export type ConversationType = {
   id: string;
   title: string;
-  updatedAt: string;
+  updatedAt: Date;
+  createdAt: Date;
   userId: number;
 };
