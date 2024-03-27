@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API_URL } from '../consts';
 
 type UseGetConversationsParams = {
-  userId: number;
+  userId?: number;
 };
 
 export const useGetConversations = ({ userId }: UseGetConversationsParams) => {
@@ -19,5 +19,6 @@ export const useGetConversations = ({ userId }: UseGetConversationsParams) => {
 
       return conversations;
     },
+    enabled: Boolean(userId),
   });
 };

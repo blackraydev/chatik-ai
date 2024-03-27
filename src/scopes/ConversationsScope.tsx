@@ -60,9 +60,14 @@ const ConversationsContext = createContext<ConversationsScopeContextType>({
 });
 
 export const ConversationsScope = ({ children }: ConversationsScopeProps) => {
-  const { userId } = useUserScope();
+  const { user } = useUserScope();
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [conversationCreated, setConversationCreated] = useState(false);
+
+  const { data: conversations = [], isLoading: isConversationsLoading } = useGetConversations({
+    userId: user?.id,
+  });
+  const { mutateAsync: createConversation } = useCreateConversation();
 
   const chooseConversation = (conversationId: string) => {
     setConversationId(conversationId);
@@ -77,11 +82,6 @@ export const ConversationsScope = ({ children }: ConversationsScopeProps) => {
     setConversationId(null);
     setConversationCreated(false);
   };
-
-  const { data: conversations = [], isLoading: isConversationsLoading } = useGetConversations({
-    userId,
-  });
-  const { mutateAsync: createConversation } = useCreateConversation();
 
   return (
     <ConversationsContext.Provider

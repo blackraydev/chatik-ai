@@ -57,59 +57,14 @@
   font-weight: 500;
 }
 
-.drawer .content-wrapper {
+.drawer-content-wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
+  height: 100%;
 }
 
-.drawer .content-wrapper p {
+.drawer-content-wrapper p {
   color: rgb(161, 161, 169);
-}
-
-.drawer .conversation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: fit-content;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
-}
-
-.drawer .conversation:hover {
-  background-color: rgb(38, 38, 40);
-}
-
-.drawer .conversation.active {
-  background-color: rgb(44, 44, 46);
-}
-
-.drawer .conversation-title {
-  color: white;
-  font-size: 16px;
-  text-align: justify;
-}
-
-.drawer .conversations-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-}
-
-.conversations-wrapper .conversations-period {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: flex-start;
-}
-
-.conversations-wrapper .conversations-period .period-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: rgb(161, 161, 169);
-  margin-left: 10px;
 }

@@ -6,7 +6,7 @@ import { SendIcon } from '../../icons';
 import './Interaction.css';
 
 export const Interaction = () => {
-  const { userId } = useUserScope();
+  const { user } = useUserScope();
   const { conversationId, createConversation, initializeConversation, setConversationCreated } =
     useConversationsScope();
   const { addMessage, botMessage, setBotMessage } = useMessagesScope();
@@ -24,7 +24,7 @@ export const Interaction = () => {
 
   const handleCreateConversation = (conversationId: string, prompt: string) => {
     initializeConversation(conversationId);
-    createConversation({ userId, conversationId, prompt }).then(() => {
+    createConversation({ userId: user?.id, conversationId, prompt }).then(() => {
       setConversationCreated(true);
     });
   };

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_URL } from '../consts';
 
 export type UseCreateConversationParams = {
-  userId: number;
+  userId?: number;
   conversationId: string;
   prompt: string;
 };
