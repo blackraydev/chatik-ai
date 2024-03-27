@@ -20,6 +20,8 @@ export const UserDetails = () => {
           <span>{tariff} plan</span>
         </div>
       </div>
+      {photoURL?.toString()}
+      {!Boolean(photoURL) && <div>{photoURL}</div>}
       <button className="user-upgrade"></button>
     </div>
   );
