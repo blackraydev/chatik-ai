@@ -4,6 +4,7 @@ import { getConversationsByPeriods } from '../../../utils';
 import { periodLabels } from '../../../consts';
 import { PeriodType } from '../../../types';
 import './ConversationsList.css';
+import { Link } from 'react-router-dom';
 
 export const ConversationsList = () => {
   const { conversations, conversationId, chooseConversation } = useConversationsScope();
@@ -33,13 +34,14 @@ export const ConversationsList = () => {
                     conversation.id === conversationId ? 'conversation active' : 'conversation';
 
                   return (
-                    <div
+                    <Link
                       key={conversation.id}
                       className={conversationClassName}
                       onClick={() => handleConversationClick(conversation.id)}
+                      to={`/${conversation.id}`}
                     >
                       <p className="conversation-title">{conversation.title}</p>
-                    </div>
+                    </Link>
                   );
                 })}
             </div>

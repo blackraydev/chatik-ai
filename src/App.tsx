@@ -1,9 +1,14 @@
-import { Fragment } from 'react';
-import { Conversation, Drawer, Header, Interaction, Spinner } from './components';
+import { Fragment, useMemo } from 'react';
+import { Navigate, Route, Router, Routes } from 'react-router-dom';
+import { createNavigator, useNavigatorIntegration } from '@tma.js/react-router-integration';
+import { routes } from './consts';
+import { Drawer, Header, Spinner } from './components';
 import { useUserScope } from './scopes';
 import './App.css';
 
 function App() {
+  const tmaNavigator = useMemo(createNavigator, []);
+  const [location, navigator] = useNavigatorIntegration(tmaNavigator);
   const { user, isUserLoading, isUserError } = useUserScope();
 
   const renderContent = () => {
@@ -26,13 +31,21 @@ function App() {
       <Fragment>
         <Header />
         <Drawer />
-        <Conversation />
-        <Interaction />
+        <Routes>
+          {routes.map((route) => (
+            <Route key={route.path} {...route} />
+          ))}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </Fragment>
     );
   };
 
-  return <div className="app">{renderContent()}</div>;
+  return (
+    <Router location={location} navigator={navigator}>
+      <div className="app">{renderContent()}</div>;
+    </Router>
+  );
 }
 
 export default App;

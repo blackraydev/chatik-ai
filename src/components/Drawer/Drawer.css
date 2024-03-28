@@ -37,6 +37,7 @@
 }
 
 .drawer .new-chat {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;

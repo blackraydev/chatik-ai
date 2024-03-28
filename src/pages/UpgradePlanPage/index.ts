@@ -1,0 +1,1 @@
+export { UpgradePlanPage } from './UpgradePlanPage';

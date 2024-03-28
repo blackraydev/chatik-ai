@@ -1,0 +1,13 @@
+.upgrade-plan-page {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.upgrade-plan-page .label {
+  color: white;
+}

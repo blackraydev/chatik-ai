@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import { BotIcon, CreateIcon } from '../../icons';
 import { useConversationsScope, useDrawerVisibilityScope, useMessagesScope } from '../../scopes';
 import { Spinner } from '../Spinner';
 import { ConversationsList } from './ConversationsList';
-import './Drawer.css';
 import { UserDetails } from './UserDetails';
+import './Drawer.css';
 
 export const Drawer = () => {
   const { conversations, startNewConversation, isConversationsLoading } = useConversationsScope();
@@ -44,13 +45,13 @@ export const Drawer = () => {
   return (
     <div className={overlayClassName} onClick={hideDrawer}>
       <div className={drawerClassName} onClick={(e) => e.stopPropagation()}>
-        <div className="new-chat" onClick={handleStartNewConversation}>
+        <Link className="new-chat" to={'/'} onClick={handleStartNewConversation}>
           <div className="action">
             <BotIcon size={24} />
             <p>New chat</p>
           </div>
           <CreateIcon />
-        </div>
+        </Link>
         {renderConversations()}
         <UserDetails />
       </div>
