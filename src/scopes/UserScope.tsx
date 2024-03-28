@@ -30,17 +30,17 @@ const UserContext = createContext<UserScopeContextType>({
   isUserError: false,
 });
 
+const mockUserData = {
+  id: 1010101,
+  first_name: 'John',
+  last_name: 'Doe',
+  photo_url: 'https://avatars.githubusercontent.com/u/37336881?v=4',
+  tariff: 'free',
+};
+
 export const UserScope = ({ children }: UserScopeProps) => {
   const rawUserData = useMemo(() => {
-    return (
-      WebApp.initDataUnsafe.user ?? {
-        id: 1010101,
-        first_name: 'John',
-        last_name: 'Doe',
-        photo_url: '',
-        tariff: 'free',
-      }
-    );
+    return WebApp.initDataUnsafe.user ?? mockUserData;
   }, [WebApp.initDataUnsafe.user]);
 
   const {

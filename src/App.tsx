@@ -4,20 +4,20 @@ import { useUserScope } from './scopes';
 import './App.css';
 
 function App() {
-  const { isUserLoading, isUserError } = useUserScope();
+  const { user, isUserLoading, isUserError } = useUserScope();
 
   const renderContent = () => {
-    if (isUserLoading) {
-      return (
-        <div className="content-wrapper">
-          <Spinner size="big" />
-        </div>
-      );
-    }
     if (isUserError) {
       return (
         <div className="content-wrapper">
           <p className="error-label">Server is unavailable</p>
+        </div>
+      );
+    }
+    if (isUserLoading || !user) {
+      return (
+        <div className="content-wrapper">
+          <Spinner size="big" />
         </div>
       );
     }
